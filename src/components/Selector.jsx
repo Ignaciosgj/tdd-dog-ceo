@@ -26,10 +26,11 @@ export const Selector = ({ options }) => {
   }
 
   const handleAddClick = () => {
-    if (!selectedBreedsList.some((breed) => breed === `${selectedBreed}/${selectedSubBreed}`)) {
-      setSelectedBreedsList([...selectedBreedsList, `${selectedBreed}/${selectedSubBreed}`]);
-      setSelectedSubBreed('');
-    }
+
+    // if (!selectedBreedsList.some((breed) => breed.contains(selectedBreed))) {
+    //   setSelectedBreedsList([...selectedBreedsList, `${selectedBreed}/${selectedSubBreed}`]);
+    //   setSelectedSubBreed('');
+    // }
   }
 
   const handleRemoveClick = (breed) => {
