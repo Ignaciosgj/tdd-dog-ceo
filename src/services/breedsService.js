@@ -1,13 +1,13 @@
 import axios from "axios";
 
 export const getAllBreeds = async () => {
-    try {
-        const response = await axios("https://dog.ceo/api/breeds/list/all");
-        const result = response.data;
-        return result;
-      } catch (error) {
-        throw new Error('API caida');
-      }
+  try {
+    const response = await axios("https://dog.ceo/api/breeds/list/all");
+    const result = response.data;
+    return result;
+  } catch (error) {
+    throw new Error('API caida');
+  }
 }
 
 export const getBreedImages = async (breed) => {
