@@ -88,7 +88,92 @@ describe("tests for Selector component", () => {
         expect(subBreed3).toBeInTheDocument();
     });
 
-    it("it should ")
+    it("it should render a list of selected breeds", () => {
+
+        //Arrange
+        const options = [{ breed: 'briard', subBreeds: [] }, { breed: 'buhund', subBreeds: ['norwegian'] }, { breed: 'bulldog', subBreeds: ['boston', 'english', 'french'] }];
+        render(<Selector options={options} />);
+
+        //Act
+        const breedSelector = screen.queryByTestId('breed-selector');
+        const addButton = screen.queryByTestId('add-button');
+
+        fireEvent.change(breedSelector, { target: { value: 'buhund' } });
+
+        const subBreedSelector = screen.queryByTestId('subBreed-selector');
+
+        fireEvent.change(subBreedSelector, { target: { value: 'norwegian' } });
+
+        fireEvent.click(addButton);
+
+        const removeButton = screen.queryByTestId('remove-button');
+
+        const listItem = screen.getByText('buhund norwegian');
+
+        //Assert
+        expect(removeButton).toBeInTheDocument();
+        expect(listItem).toBeInTheDocument();
+
+    });
+
+    it("should remove an item from the list when the remove button is clicked", () => {
+
+        //Arrange
+        const options = [{ breed: 'briard', subBreeds: [] }, { breed: 'buhund', subBreeds: ['norwegian'] }, { breed: 'bulldog', subBreeds: ['boston', 'english', 'french'] }];
+        render(<Selector options={options} />);
+
+        //Act
+        const breedSelector = screen.queryByTestId('breed-selector');
+        const addButton = screen.queryByTestId('add-button');
+        fireEvent.change(breedSelector, { target: { value: 'briard' } });
+        fireEvent.click(addButton);
+        fireEvent.change(breedSelector, { target: { value: 'buhund' } });
+        fireEvent.click(addButton);
+        fireEvent.change(breedSelector, { target: { value: 'bulldog' } });
+        fireEvent.click(addButton);
+
+        const listItem = screen.queryAllByTestId('breed-item');
+        const briardItem = listItem[0]
+        const buhundItem = listItem[1]
+        const bulldogItem = listItem[2]
+
+        const removeButton = screen.queryAllByTestId('remove-button');
+        const briardRemoveButton = removeButton[0];
+
+        fireEvent.click(briardRemoveButton);
+
+        //Assert
+        expect(briardItem).not.toBeInTheDocument();
+        expect(buhundItem).toBeInTheDocument();
+        expect(bulldogItem).toBeInTheDocument();
+    });
+
+    it("it should remove the breed with no subBreeds if a subBreed is selected", () => {
+
+        //Arrange
+        const options = [{ breed: 'briard', subBreeds: [] }, { breed: 'buhund', subBreeds: ['norwegian'] }, { breed: 'bulldog', subBreeds: ['boston', 'english', 'french'] }];
+        render(<Selector options={options} />);
+
+        //Act
+        const breedSelector = screen.queryByTestId('breed-selector');
+        const addButton = screen.queryByTestId('add-button');
+        fireEvent.change(breedSelector, { target: { value: 'buhund' } });
+        fireEvent.click(addButton);
+
+        fireEvent.change(breedSelector, { target: { value: 'buhund' } });
+
+        const subBreedSelector = screen.queryByTestId('subBreed-selector');
+        fireEvent.change(subBreedSelector, { target: { value: 'norwegian' } });
+
+        fireEvent.click(addButton);
+
+        const buhundItem = screen.queryByDisplayValue('buhund');
+        const norwegianItem = screen.queryByText('buhund norwegian');
+
+        //Assert
+        expect(norwegianItem).toBeInTheDocument();
+        expect(buhundItem).not.toBeInTheDocument();
+    })
 })
 
 
