@@ -25,12 +25,26 @@ export const Selector = ({ options }) => {
     setSelectedSubBreed(e.target.value);
   }
 
+  const addBreed = (array, value) => {
+    const breedSplitter = value.split("/", 1)[0];
+    if (!array.some((element) => element.includes(value))) {
+      const result = array.filter((breed) => breedSplitter !== breed);
+      return {result, value};
+    } else {
+      const result = array;
+      const value = 'existing breed';
+      return {result, value}
+    }
+  }
+    
   const handleAddClick = () => {
-
-    // if (!selectedBreedsList.some((breed) => breed.contains(selectedBreed))) {
-    //   setSelectedBreedsList([...selectedBreedsList, `${selectedBreed}/${selectedSubBreed}`]);
-    //   setSelectedSubBreed('');
-    // }
+    const breed = selectedSubBreed !== '' ? `${selectedBreed}/${selectedSubBreed}` : selectedBreed;
+      const {result, value} = addBreed(selectedBreedsList, breed );
+      if (value !== 'existing breed')  {
+        setSelectedBreedsList([...result, value]);
+      } else {
+        setSelectedBreedsList([...result]);
+      }
   }
 
   const handleRemoveClick = (breed) => {
@@ -56,11 +70,12 @@ export const Selector = ({ options }) => {
           {subBreeds.map((subBreed) => <option value={subBreed} key={subBreed} data-testid="subBreedOptions">{subBreed}</option>)}
         </select>
       }
+
       <button onClick={handleAddClick} data-testid="add-button">Agregar</button>
       <ul>
         {selectedBreedsList.map((breed) => (
           <li data-testid="breed-item" key={breed}>
-            {breed.replace('/', ' ')}
+            {breed}
             <button data-testid="remove-button" onClick={() => handleRemoveClick(breed)}>Eliminar</button>
           </li>
         ))}
