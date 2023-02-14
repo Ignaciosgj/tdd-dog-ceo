@@ -15,7 +15,7 @@ describe("tests for Selector component", () => {
 
         //Assert
         expect(breedSelector).not.toBeInTheDocument();
-        expect(subBreedSelector).not.toBeInTheDocument(); 
+        expect(subBreedSelector).not.toBeInTheDocument();
     });
 
     it("it should be show 3 options", () => {
@@ -113,7 +113,6 @@ describe("tests for Selector component", () => {
         //Assert
         expect(removeButton).toBeInTheDocument();
         expect(listItem).toBeInTheDocument();
-
     });
 
     it("should remove an item from the list when the remove button is clicked", () => {
@@ -167,14 +166,12 @@ describe("tests for Selector component", () => {
 
         fireEvent.click(addButton);
 
-        const buhundItem = screen.getAllByDisplayValue('buhund');
+        const listItem = screen.queryAllByDisplayValue('buhund');
         const norwegianItem = screen.queryByText('buhund norwegian');
-
-        console.log("--------------------->", buhundItem );
 
         //Assert
         expect(norwegianItem).toBeInTheDocument();
-        expect(buhundItem[1]).not.toBeInTheDocument();
+        expect(listItem).not.toBeInTheDocument();
     });
 })
 

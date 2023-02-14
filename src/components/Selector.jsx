@@ -29,22 +29,22 @@ export const Selector = ({ options }) => {
     const breedSplitter = value.split("/", 1)[0];
     if (!array.some((element) => element.includes(value))) {
       const result = array.filter((breed) => breedSplitter !== breed);
-      return {result, value};
+      return { result, value };
     } else {
       const result = array;
       const value = 'existing breed';
-      return {result, value}
+      return { result, value }
     }
   }
-    
+
   const handleAddClick = () => {
     const breed = selectedSubBreed !== '' ? `${selectedBreed}/${selectedSubBreed}` : selectedBreed;
-      const {result, value} = addBreed(selectedBreedsList, breed );
-      if (value !== 'existing breed')  {
-        setSelectedBreedsList([...result, value]);
-      } else {
-        setSelectedBreedsList([...result]);
-      }
+    const { result, value } = addBreed(selectedBreedsList, breed);
+    if (value !== 'existing breed') {
+      setSelectedBreedsList([...result, value]);
+    } else {
+      setSelectedBreedsList([...result]);
+    }
   }
 
   const handleRemoveClick = (breed) => {
@@ -75,7 +75,7 @@ export const Selector = ({ options }) => {
       <ul>
         {selectedBreedsList.map((breed) => (
           <li data-testid="breed-item" key={breed}>
-            {breed}
+            {breed.replace('/', ' ')}
             <button data-testid="remove-button" onClick={() => handleRemoveClick(breed)}>Eliminar</button>
           </li>
         ))}
