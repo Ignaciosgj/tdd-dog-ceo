@@ -1,4 +1,4 @@
-import { act, fireEvent, getByTestId, render, screen, } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Selector } from "./Selector";
 // import '@testing-library/jest-dom';
@@ -15,7 +15,7 @@ describe("tests for Selector component", () => {
 
         //Assert
         expect(breedSelector).not.toBeInTheDocument();
-        expect(subBreedSelector).not.toBeInTheDocument();
+        expect(subBreedSelector).not.toBeInTheDocument(); 
     });
 
     it("it should be show 3 options", () => {
@@ -113,6 +113,7 @@ describe("tests for Selector component", () => {
         //Assert
         expect(removeButton).toBeInTheDocument();
         expect(listItem).toBeInTheDocument();
+
     });
 
     it("should remove an item from the list when the remove button is clicked", () => {
@@ -156,6 +157,7 @@ describe("tests for Selector component", () => {
         //Act
         const breedSelector = screen.queryByTestId('breed-selector');
         const addButton = screen.queryByTestId('add-button');
+        
         fireEvent.change(breedSelector, { target: { value: 'buhund' } });
         fireEvent.click(addButton);
 
@@ -166,12 +168,13 @@ describe("tests for Selector component", () => {
 
         fireEvent.click(addButton);
 
-        const listItem = screen.queryAllByDisplayValue('buhund');
+        const breedContainer = screen.queryByTestId('breed-container');
+        const buhundItem = within(breedContainer).queryByText('buhund');
         const norwegianItem = screen.queryByText('buhund norwegian');
 
         //Assert
         expect(norwegianItem).toBeInTheDocument();
-        expect(listItem).not.toBeInTheDocument();
+        expect(buhundItem).not.toBeInTheDocument();
     });
 })
 
