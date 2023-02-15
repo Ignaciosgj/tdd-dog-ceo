@@ -31,7 +31,7 @@ describe("tests for Breeds services", async () => {
 
             //Assert
             await expect(() => getAllBreeds()).rejects.toThrowError("API caida")
-        })
+        });
 
         it("getBreedImages function should return bulldog images", async () => {
 
@@ -48,8 +48,8 @@ describe("tests for Breeds services", async () => {
             const result = await getBreedImages('bulldog');
 
             //Assert
-            expect(result).toEqual(imagesMock);
-        })
+            expect(result.message).toEqual(imagesMock);
+        });
 
         it("getBreedImages function should throw an error if API is down", async () => {
 
@@ -60,9 +60,9 @@ describe("tests for Breeds services", async () => {
 
             //Assert
             await expect(() => getBreedImages('bulldog')).rejects.toThrowError('API caida')
-        })
+        });
 
-        it.skip("getBreedImages function should throw an error if param isn't a string", async () => {
+        it("getBreedImages function should throw an error if param isn't a string", async () => {
 
             //Arrange
             const param1 = true;
@@ -72,10 +72,10 @@ describe("tests for Breeds services", async () => {
             const param5 = null
 
             //Act & Assert
-            await expect(() => getBreedImages(param1)).rejects.toThrowError('API caida');
-            await expect(() => getBreedImages(param2)).rejects.toThrowError('API caida');
-            await expect(() => getBreedImages(param3)).rejects.toThrowError('API caida');
-            await expect(() => getBreedImages(param4)).rejects.toThrowError('API caida');
-            await expect(() => getBreedImages(param5)).rejects.toThrowError('API caida');
-        })
+            await expect(() => getBreedImages(param1)).rejects.toThrowError('Parámetro no valido');
+            await expect(() => getBreedImages(param2)).rejects.toThrowError('Parámetro no valido');
+            await expect(() => getBreedImages(param3)).rejects.toThrowError('Parámetro no valido');
+            await expect(() => getBreedImages(param4)).rejects.toThrowError('Parámetro no valido');
+            await expect(() => getBreedImages(param5)).rejects.toThrowError('Parámetro no valido');
+        });
 })
