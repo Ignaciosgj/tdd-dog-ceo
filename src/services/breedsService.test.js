@@ -71,11 +71,26 @@ describe("tests for Breeds services", async () => {
             const param4 = {}
             const param5 = null
 
+            
+
             //Act & Assert
             await expect(() => getBreedImages(param1)).rejects.toThrowError('Parámetro no valido');
             await expect(() => getBreedImages(param2)).rejects.toThrowError('Parámetro no valido');
             await expect(() => getBreedImages(param3)).rejects.toThrowError('Parámetro no valido');
             await expect(() => getBreedImages(param4)).rejects.toThrowError('Parámetro no valido');
             await expect(() => getBreedImages(param5)).rejects.toThrowError('Parámetro no valido');
+            await expect(() => getBreedImages(param5)).rejects.toThrowError('Parámetro no valido');
+
+            const imagesMock = bulldogImages;
+            axios.mockResolvedValue({
+                data: {
+                    status: 'successs',
+                    message: imagesMock
+                }
+            })
+
+            const result = await getBreedImages('bulldog');
+
+            expect(result.message).toEqual(imagesMock);
         });
 })

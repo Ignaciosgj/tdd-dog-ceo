@@ -12,10 +12,14 @@ describe("tests for Selector component", () => {
         //Act
         const breedSelector = screen.queryByTestId('breeds-selector');
         const subBreedSelector = screen.queryByTestId('subBreeds-selector');
+        const addButton = screen.queryByTestId('add-button');
+
 
         //Assert
         expect(breedSelector).not.toBeInTheDocument();
-        expect(subBreedSelector).not.toBeInTheDocument(); 
+        expect(subBreedSelector).not.toBeInTheDocument();
+        expect(addButton).not.toBeInTheDocument();
+        
     });
 
     it("it should be show 3 options", () => {
@@ -176,6 +180,38 @@ describe("tests for Selector component", () => {
         expect(norwegianItem).toBeInTheDocument();
         expect(buhundItem).not.toBeInTheDocument();
     });
+
+    it("", () => {
+
+        //Arrange
+        const options = [{ breed: 'briard', subBreeds: [] }, { breed: 'buhund', subBreeds: ['norwegian'] }, { breed: 'bulldog', subBreeds: ['boston', 'english', 'french'] }];
+        render(<Selector options={options} />);
+
+        //Act
+        const breedSelector = screen.queryByTestId('breed-selector');
+        fireEvent.change(breedSelector, {target: {value: 'bulldog'}});
+
+        const subBreedSelector = screen.queryByTestId('subBreed-selector');
+        fireEvent.change(subBreedSelector, {target: {value: 'boston'}});
+
+        const addButton = screen.queryByTestId('add-button');
+        fireEvent.click(addButton);
+
+        fireEvent.change(breedSelector, {target: {value: 'briard'}});
+        fireEvent.click(addButton);
+
+        const bulldogBoston = screen.queryByText('bulldog boston');
+        const briardBoston = screen.queryByText('briard boston');
+
+        const breedContainer = screen.queryByTestId('breed-container');
+
+        const briard = within(breedContainer).queryByText('briard');
+
+        //Assert
+        expect(bulldogBoston).toBeInTheDocument();
+        expect(briardBoston).not.toBeInTheDocument();
+        expect(briard).toBeInTheDocument();
+    })
 })
 
 

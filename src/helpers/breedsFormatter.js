@@ -5,5 +5,4 @@ export const breedsFormatter = (data) => {
         breed,
         subBreeds: data[breed]
     }))
-
 }

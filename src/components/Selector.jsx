@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BreedImages } from './BreedImages';
+import { BreedImagesContainer } from './BreedImagesContainer';
 
 export const Selector = ({ options }) => {
 
@@ -45,6 +45,7 @@ export const Selector = ({ options }) => {
     } else {
       setSelectedBreedsList([...result]);
     }
+    setSelectedSubBreed('');
   }
 
   const handleRemoveClick = (breed) => {
@@ -70,9 +71,10 @@ export const Selector = ({ options }) => {
           {subBreeds.map((subBreed) => <option value={subBreed} key={subBreed} data-testid="subBreedOptions">{subBreed}</option>)}
         </select>
       }
-
-      <button onClick={handleAddClick} data-testid="add-button">Agregar</button>
-      <ul>
+      { options.length > 0 &&
+        <button onClick={handleAddClick} data-testid="add-button">Agregar</button>
+      }
+      <ul data-testid="breed-container">
         {selectedBreedsList.map((breed) => (
           <li data-testid="breed-item" key={breed}>
             {breed.replace('/', ' ')}
@@ -80,7 +82,7 @@ export const Selector = ({ options }) => {
           </li>
         ))}
       </ul>
-      <BreedImages image={"https://images.dog.ceo/breeds/bulldog-boston/20200710_175944.jpg"} />
+      <BreedImagesContainer image={"https://images.dog.ceo/breeds/bulldog-boston/20200710_175944.jpg"} />
     </>
   )
 }

@@ -27,5 +27,3 @@ export const getBreedImages = async (breed) => {
       return result;
   }
 }
-
-
